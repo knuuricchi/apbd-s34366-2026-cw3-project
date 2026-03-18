@@ -5,6 +5,12 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>ConsoleApp1</RootNamespace>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Include="obj\Employee.cs" />
+      <Compile Include="obj\User.cs" />
+    </ItemGroup>
 
 </Project>

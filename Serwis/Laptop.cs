@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp1;
+﻿namespace Serwis;
 
 public class Laptop : Equipment
 {
