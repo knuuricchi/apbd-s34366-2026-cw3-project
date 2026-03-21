@@ -33,6 +33,14 @@ public class RentalService
         users.Add(user);
     }
     
+    public void showUsers()
+    {
+        foreach (var user in users)
+        {
+            Console.WriteLine(user);
+        }
+    }
+    
     public void RentEquipment(User user, Equipment equipment, int days)
     {
         if (equipment.Status != EquipmentStatus.AVAILABLE)

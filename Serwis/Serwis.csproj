@@ -2,16 +2,9 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>ConsoleApp1</RootNamespace>
     </PropertyGroup>
-
-    <ItemGroup>
-      <Compile Include="obj\Employee.cs" />
-      <Compile Include="obj\User.cs" />
-      <Compile Include="obj\UserType.cs" />
-    </ItemGroup>
 
 </Project>
