@@ -2,7 +2,7 @@
 
 public enum EquipmentStatus
 {
-    Available,
-    Rented,
-    UnderMaintenance
+    AVAILABLE,
+    RENTED,
+    UNAVAILABLE
 }

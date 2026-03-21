@@ -2,6 +2,6 @@
 
 public enum UserType
 {
-    Student,
-    Employee
+    STUDENT,
+    EMPLOYEE
 }

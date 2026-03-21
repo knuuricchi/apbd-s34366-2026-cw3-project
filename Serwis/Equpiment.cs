@@ -6,7 +6,7 @@ public abstract class Equipment
     
     public string Name { get; set; }
     
-    public EquipmentStatus Status { get; set; } = EquipmentStatus.Available;
+    public EquipmentStatus Status { get; set; } = EquipmentStatus.AVAILABLE;
 
     public string InventoryNumber { get; set; }
     
