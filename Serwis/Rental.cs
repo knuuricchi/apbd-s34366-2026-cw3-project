@@ -11,8 +11,6 @@ public class Rental
     public DateTime DueDate { get; set; }
     public DateTime? ReturnDate { get; set; }
 
-    
-
     public override string ToString()
     {
         return $"{Equipment?.Name} dla {User} od {RentDate:d} do {DueDate:d}, zwrot: {(ReturnDate?.ToShortDateString() ?? "brak")}";
