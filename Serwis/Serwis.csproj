@@ -11,6 +11,7 @@
     <ItemGroup>
       <Compile Include="obj\Employee.cs" />
       <Compile Include="obj\User.cs" />
+      <Compile Include="obj\UserType.cs" />
     </ItemGroup>
 
 </Project>

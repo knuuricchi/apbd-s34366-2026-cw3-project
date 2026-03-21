@@ -6,9 +6,3 @@ public enum EquipmentStatus
     Rented,
     UnderMaintenance
 }
-
-public enum UserType
-{
-    Student,
-    Employee
-}
