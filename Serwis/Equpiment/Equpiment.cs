@@ -10,8 +10,6 @@ public abstract class Equipment
 
     public string InventoryNumber { get; set; }
     
-    public string Manufacturer { get; set; }
-
     protected Equipment(string name)
     {
         Name = name;
@@ -19,6 +17,6 @@ public abstract class Equipment
 
     public override string ToString()
     {
-        return $"{Name} ({InventoryNumber}) - {Status}";
+        return $"ID: {Id} | {Name} ({InventoryNumber}) - {Status} ({GetType().Name.ToUpper()})";
     }
 }

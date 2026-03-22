@@ -16,6 +16,6 @@ public abstract class User
 
     public override string ToString()
     {
-        return $"{FirstName} {LastName} ({UserType})";
+        return $"ID: {Id} | {FirstName} {LastName} ({UserType})";
     }
 }

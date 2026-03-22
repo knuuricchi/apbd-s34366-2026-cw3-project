@@ -17,6 +17,11 @@ public class UI
             Console.WriteLine("5. Wypozycz sprzet");
             Console.WriteLine("6. Zwroc sprzet");
             Console.WriteLine("7. Raport");
+            Console.WriteLine("8. Wyswietl tylko dostepny sprzet");
+            Console.WriteLine("9. Oznacz sprzet jako niedostepny");
+            Console.WriteLine("10. Wyswietl aktywne wypozyczenia uzytkownika");
+            Console.WriteLine("11. Wyswietl wszystkie aktywne wypozyczenia");
+            Console.WriteLine("12. Wyswietl przeterminowane wypozyczenia");
             Console.WriteLine("0. Wyjscie");
             Console.Write("Wybor: ");
 
@@ -30,6 +35,11 @@ public class UI
                 case "5": RentMenu(); break;
                 case "6": ReturnMenu(); break;
                 case "7": serwisApp.generateRaport(); break;
+                case "8": serwisApp.showAvailableEquipment(); break;
+                case "9": SetEquipmentUnavailableMenu(); break;
+                case "10": ShowUserRentalsMenu(); break;
+                case "11": serwisApp.ShowAllRentals(); break;
+                case "12": serwisApp.showOverdueRentals(); break;
                 case "0": running = false; break;
             }
         }
@@ -57,20 +67,96 @@ public class UI
         {
             "1" => new Laptop(name),
             "2" => new Camera(name),
-            _ => new Projector(name)
+            "3" => new Projector(name),
+            _ => null
         };
         
+        if (eq == null)
+        {
+            Console.WriteLine("Nieprawidlowy wybor typu sprzetu! ");
+            return;
+        }
         serwisApp.AddEquipment(eq);
         Console.WriteLine("Dodano sprzet.");
     }
 
     private void RentMenu()
     {
-        //TODO
+        Console.Write("Podaj ID uzytkownika: ");
+        if (!Guid.TryParse(Console.ReadLine(), out Guid userId))
+        {
+            Console.WriteLine("Bledny ID");
+            return;
+        }
+        
+        var user = serwisApp.GetUserById(userId);
+        
+        if (user == null)
+        {
+            Console.WriteLine("Nie znaleziono uzytkownika");
+            return;
+        }
+        
+        Console.Write("Podaj ID sprzetu: ");
+        if (!Guid.TryParse(Console.ReadLine(), out Guid eqId))
+        {
+            Console.WriteLine("Bledny ID");
+            return;
+        }
+        var eq = serwisApp.GetEquipmentById(eqId);
+        if (eq == null)
+        {
+            Console.WriteLine("Nie znaleziono sprzetu");
+            return;
+        }
+        Console.Write("Na ile dni: ");
+        int days = int.Parse(Console.ReadLine());
+        if (days <= 0) { 
+            Console.WriteLine("Bledna liczba dni"); 
+            return; 
+        }
+        serwisApp.RentEquipment(user, eq, days);
     }
 
     private void ReturnMenu()
     {
-        //TODO
+        Console.Write("Podaj ID sprzetu do zwrotu: ");
+        if (!Guid.TryParse(Console.ReadLine(), out Guid eqId)) { Console.WriteLine("Bledny ID");
+            return; }
+        var eq = serwisApp.GetEquipmentById(eqId);
+        if (eq == null)
+        {
+            Console.WriteLine("Nie znaleziono sprzetu");
+            return;
+        }
+        serwisApp.ReturnEquipment(eq);
+    }
+
+    private void SetEquipmentUnavailableMenu()
+    {
+        Console.Write("Podaj ID sprzetu do oznaczenia jako niedostepny: ");
+        if (!Guid.TryParse(Console.ReadLine(), out Guid eqId)) { 
+            Console.WriteLine("Bledny ID"); 
+            return; 
+        }
+        var eq = serwisApp.GetEquipmentById(eqId);
+        if (eq == null)
+        {
+            Console.WriteLine("Nie znaleziono sprzetu"); 
+            return;
+        }
+        serwisApp.setEquipmentUnavailable(eq);
+        Console.WriteLine("Sprzet oznaczony jako niedostepny.");
+    }
+
+    private void ShowUserRentalsMenu()
+    {
+        Console.Write("Podaj ID uzytkownika: ");
+        if (!Guid.TryParse(Console.ReadLine(), out Guid userId)) { Console.WriteLine("Bledny ID");
+            return; }
+        var user = serwisApp.GetUserById(userId);
+        if (user == null) { Console.WriteLine("Nie znaleziono uzytkownika");
+            return; }
+        serwisApp.ShowUserRentals(user);
     }
 }
