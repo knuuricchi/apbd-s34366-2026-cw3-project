@@ -7,7 +7,7 @@ public class RentalService
     private const double PENALTY = 1.5;
 
     List<Equipment> equipments = new List<Equipment>();
-    List<Rental> _rentals = new List<Rental>();
+    List<Rental> rentals = new List<Rental>();
     List<User> users = new List<User>();
     
     public void AddEquipment(Equipment equipment)
@@ -53,7 +53,7 @@ public class RentalService
             return;
         }
 
-        int activeRentals = _rentals.Count(
+        int activeRentals = rentals.Count(
             r => r.User.Id == user.Id && r.ReturnDate == null);
         int userLimit = user.UserType == UserType.STUDENT ? STUDENT_LIMIT : EMPLOYEE_LIMIT;
         if (activeRentals >= userLimit)
@@ -64,7 +64,7 @@ public class RentalService
 
         equipment.Status = EquipmentStatus.RENTED;
         var now = DateTime.Now;
-        _rentals.Add(new Rental {
+        rentals.Add(new Rental {
             User = user,
             Equipment = equipment,
             RentDate = now,
@@ -74,7 +74,7 @@ public class RentalService
     
     public void ReturnEquipment(Equipment equipment)
     {
-        var rental = _rentals.FirstOrDefault(
+        var rental = rentals.FirstOrDefault(
             r => r.Equipment.Id == equipment.Id && r.ReturnDate == null
             );
     
@@ -95,7 +95,7 @@ public class RentalService
             if (delayDays > 0)
             {
                 double totalPenalty = delayDays * PENALTY;
-                Console.WriteLine($"Opoznienie zwrotu: {delayDays} dni. Kara: {totalPenalty} zł. ");
+                Console.WriteLine($"Opoznienie zwrotu: {delayDays} dni. Kara: {totalPenalty} zl. ");
             }
         }
         else 
@@ -111,9 +111,9 @@ public class RentalService
     
     public void ShowUserRentals(User user)
     {
-        var userActiveRentals = _rentals.Where(
+        var userActiveRentals = rentals.Where(
             r => r.User.Id == user.Id && r.ReturnDate == null);
-        Console.WriteLine($"Aktywne wypożyczenia dla użytkownika: {user.FirstName} {user.LastName}");
+        Console.WriteLine($"Aktywne wypozyczenia dla uzytkownika: {user.FirstName} {user.LastName}");
         foreach (var rental in userActiveRentals)
         {
             Console.WriteLine(rental);
@@ -122,7 +122,7 @@ public class RentalService
     
     public void ShowAllRentals()
     {
-        var activeRentals = _rentals.Where(
+        var activeRentals = rentals.Where(
             r => r.ReturnDate == null);
         foreach (var rental in activeRentals)
             Console.WriteLine(rental);
@@ -130,7 +130,7 @@ public class RentalService
     
     public void showOverdueRentals()
     {
-        var overdueRentals = _rentals.Where(
+        var overdueRentals = rentals.Where(
             r => r.ReturnDate == null && r.DueDate < DateTime.Now);
         foreach (var rental in overdueRentals)
             Console.WriteLine(rental);
@@ -143,7 +143,7 @@ public class RentalService
         Console.WriteLine($"Dostepny sprzet: {equipments.Count(e => e.Status == EquipmentStatus.AVAILABLE)}");
         Console.WriteLine($"Wypozyczony sprzet: {equipments.Count(e => e.Status == EquipmentStatus.RENTED)}");
         Console.WriteLine($"Brakujacy sprzet: {equipments.Count(e => e.Status == EquipmentStatus.UNAVAILABLE)}");
-        Console.WriteLine($"Aktualne wypozyczenia: {_rentals.Count(r => r.ReturnDate == null)}");
+        Console.WriteLine($"Aktualne wypozyczenia: {rentals.Count(r => r.ReturnDate == null)}");
     }
 
     public User GetUserById(Guid id)
