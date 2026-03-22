@@ -2,6 +2,10 @@
 
 public class RentalService
 {
+    private const int STUDENT_LIMIT = 2;
+    private const int EMPLOYEE_LIMIT = 5;
+    private const double PENALTY = 1.5;
+
     List<Equipment> equipments = new List<Equipment>();
     List<Rental> rentals = new List<Rental>();
     List<User> users = new List<User>();
@@ -48,7 +52,15 @@ public class RentalService
             Console.WriteLine("Sprzet jest niedostepny do wypozyczenia! ");
             return;
         }
-        
+
+        int activeRentals = rentals.Count(r => r.User.Id == user.Id && r.ReturnDate == null);
+        int userLimit = user.UserType == UserType.STUDENT ? STUDENT_LIMIT : EMPLOYEE_LIMIT;
+        if (activeRentals >= userLimit)
+        {
+            Console.WriteLine($"Uzytkownik przekroczyl limit wypozyczen: {userLimit}");
+            return;
+        }
+
         equipment.Status = EquipmentStatus.RENTED;
         var now = DateTime.Now;
         rentals.Add(new Rental {
@@ -81,8 +93,7 @@ public class RentalService
 
             if (delayDays > 0)
             {
-                double penaltyRate = 10.0;
-                double totalPenalty = delayDays * penaltyRate;
+                double totalPenalty = delayDays * PENALTY;
                 Console.WriteLine($"Opoznienie zwrotu: {delayDays} dni. Kara: {totalPenalty} zł. ");
             }
         }
